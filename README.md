@@ -1,5 +1,3 @@
-# LSTM-Autoencoder-Anomaly-Detection
-
 ## Project Overview
 
 This project demonstrates how to:
@@ -8,6 +6,9 @@ This project demonstrates how to:
 3. Perform scaling (StandardScaler/MinMaxScaler) on these signals.
 4. Create an LSTM-based Autoencoder model to learn a representation of these signals.
 5. Detect anomalous segments (potentially high-stress signals) by computing reconstruction errors.
+
+> **Note on Training Limitations**  
+> Due to hardware constraints, the autoencoder cannot be trained for many epochs or with larger batch sizes. Consequently, the model may not achieve extremely high accuracy. However, the current setup serves as a proof of concept for detecting anomalies (potential signs of driver stress) based on reconstruction errors.
 
 ## Main Steps
 
@@ -21,7 +22,8 @@ This project demonstrates how to:
    The `BatchLoader` class segments each driver’s data into smaller time-based chunks, normalizes each chunk, then windows them (e.g., 50 samples per window) for model input.
 
 4. **Autoencoder Training**  
-   A simple LSTM autoencoder is trained (one window size in, one window size out). Training loss (MSE) is logged each epoch.
+   A simple LSTM autoencoder is trained (one window size in, one window size out). Training loss (MSE) is logged each epoch.  
+   - **Hardware Constraints**: Limited GPU/CPU resources can restrict the number of training epochs and the complexity of the model, potentially reducing final accuracy.
 
 5. **Anomaly Detection**  
    Reconstruction error (MAE) is measured for each window. Windows with an MAE above a chosen threshold are flagged as anomalies. Each driver’s first 3,600 samples (1 hour, for instance) are analyzed, plotting anomalies on the raw HR signal.
@@ -45,4 +47,3 @@ These data come from:
 
 ### Dataset Link
 [Kaggle: Stress Recognition in Automobile Drivers](https://www.kaggle.com/datasets/bjoernjostein/stress-recognition-in-automobile-drivers)
-
